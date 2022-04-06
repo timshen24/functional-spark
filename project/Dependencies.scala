@@ -9,6 +9,7 @@ object Dependencies {
     "org.apache.spark"       %% "spark-sql"                        % sparkVersion             % "provided",
     "org.apache.spark"       %% "spark-core"                       % sparkVersion             % "provided",
     "org.apache.spark"       %% "spark-core"                       % sparkVersion             % "provided",
-    "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test)
-
+    "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test,
+    "org.scalatest" %% "scalatest" % "3.2.11" % Test
+  )
 }
