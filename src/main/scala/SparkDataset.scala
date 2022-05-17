@@ -5,7 +5,7 @@ import org.apache.spark.sql.functions.{avg, sum}
 
 import java.sql.Date
 
-object FunctionalSpark extends App {
+object SparkDataset extends App {
   val spark = SparkSession.builder()
   .master("local[*]")
   .config(new SparkConf())

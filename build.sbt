@@ -30,6 +30,9 @@ lazy val root = (project in file("."))
 lazy val common = project
   .settings(baseSettings: _*)
 
+lazy val functional = project
+  .settings(baseSettings: _*)
+
 Compile / run := Defaults
   .runTask(
     Compile / fullClasspath,
