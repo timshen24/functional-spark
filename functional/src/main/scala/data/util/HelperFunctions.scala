@@ -9,38 +9,38 @@ import scala.util.matching.Regex
 object HelperFunctions {
   def nextDiffValueInLead: DataFrame => DataFrame = {
 //    import spark.implicits._
-    df => df.withColumn("temp_rank", monotonically_increasing_id)
-      .withColumn("next_page_view_attribution_flag",
-        lead("attribution_flag", 1, 0)
-          .over(Window.partitionBy("session_final_id").orderBy("event_time", "depth", "temp_rank"))
+    df => df.withColumn("col1", monotonically_increasing_id)
+      .withColumn("col2",
+        lead("col3", 1, 0)
+          .over(Window.partitionBy("session_final_id").orderBy("col4", "col5", "col6"))
       )
-      .withColumn("next_page_view_attribution_flag",
-        last("next_page_view_attribution_flag")
+      .withColumn("next_page_view_col3",
+        last("next_page_view_col3")
           .over(Window.partitionBy("session_final_id", "unique_view_id")
-            .orderBy("event_time", "depth", "temp_rank")
+            .orderBy("col4", "col5", "col6")
             .rowsBetween(Window.unboundedPreceding, Window.unboundedFollowing))
       )
-      .drop("temp_rank")
+      .drop("col6")
   }
 
   val typeRegex: Regex = "listing.*navigation".r
   val subTypeRegex: Regex = "listing.*refine".r
 
-  def isBack(exitInteraction: Option[String]): Boolean =
-    exitInteraction match {
-      case Some(null) => false
-      case Some(value) => value.toLowerCase == "back"
-    }
+  def isFilter(oType: String, subType: String): Boolean = {
+    typeRegex.pattern.matcher(oType.toLowerCase()).matches() && subTypeRegex.pattern.matcher(subType.toLowerCase()).matches()
+  }
+
+  def isPLP(oType: String): Boolean = Set("str1", "str2", "str3").contains(oType)
 
   def isBackground(exitInteraction: Option[String]): Boolean =
     exitInteraction match {
       case Some(null) => false
-      case Some(value) => value.toLowerCase == "background"
+      case Some(value) => value.toLowerCase == "val2"
     }
 
-  def isPLP(oType: String): Boolean = Set("Curated Listing", "Listing", "Search Listing").contains(oType)
-
-  def isFilter(oType: String, subType: String): Boolean = {
-    typeRegex.pattern.matcher(oType.toLowerCase()).matches() && subTypeRegex.pattern.matcher(subType.toLowerCase()).matches()
-  }
+  def isBack(exitInteraction: Option[String]): Boolean =
+    exitInteraction match {
+      case Some(null) => false
+      case Some(value) => value.toLowerCase == "val1"
+    }
 }
