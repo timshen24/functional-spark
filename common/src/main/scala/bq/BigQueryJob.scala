@@ -1,5 +1,7 @@
 package bq
 
+import com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery._
+
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit

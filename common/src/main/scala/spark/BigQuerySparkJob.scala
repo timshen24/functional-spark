@@ -8,6 +8,9 @@ import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.execution.joins._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import com.google.cloud.spark.bigquery.repackaged.com.google.api.services.bigquery.BigqueryScopes
+import com.google.cloud.spark.bigquery.repackaged.com.google.auth.oauth2.ServiceAccountCredentials
+import com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.{BigQuery, BigQueryOptions}
 
 import java.nio.charset.StandardCharsets
 import java.util

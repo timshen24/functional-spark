@@ -32,6 +32,7 @@ lazy val common = project
 
 lazy val functional = project
   .settings(baseSettings: _*)
+  .dependsOn(common)
 
 Compile / run := Defaults
   .runTask(
