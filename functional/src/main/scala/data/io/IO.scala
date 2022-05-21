@@ -68,7 +68,7 @@ trait IODev extends IO {
 }
 
 trait IOProd extends IO {
-  override lazy val credentials: String = new String(Base64.decodeBase64(spark.conf.get("spark.gcp.project.data_analytics_cnpct_1.json.key").getBytes))
+  override lazy val credentials: String = new String(Base64.decodeBase64(spark.conf.get(SPARK_JSON_KEY).getBytes))
   initParams()
   override val conf: Config = config("prod")
 }
@@ -76,7 +76,7 @@ trait IOProd extends IO {
 trait BigQueryIOProd extends IOProd {
   val bigquery: BigQuery = BigQueryOptions.newBuilder()
     .setCredentials(ServiceAccountCredentials.fromStream(IOUtils.toInputStream(credentials, "UTF-8")).createScoped(BigqueryScopes.BIGQUERY))
-    .setProjectId("prd-data-analytics-cnpct-1")
+    .setProjectId(BQ_PROJECT_ID)
     .build()
     .getService
 }

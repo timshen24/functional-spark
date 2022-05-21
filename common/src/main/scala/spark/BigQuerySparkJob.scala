@@ -8,9 +8,6 @@ import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.execution.joins._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
-import com.google.cloud.spark.bigquery.repackaged.com.google.api.services.bigquery.BigqueryScopes
-import com.google.cloud.spark.bigquery.repackaged.com.google.auth.oauth2.ServiceAccountCredentials
-import com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.{BigQuery, BigQueryOptions}
 
 import java.nio.charset.StandardCharsets
 import java.util
@@ -49,13 +46,13 @@ trait BigQuerySparkJob extends SparkJob {
   lazy val credentialsMap: util.Map[String, String] = json2Map(credentials)
 
   protected def initParams(): Unit = {
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.auth.service.account.enable", "true")
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.project.id", credentialsMap.get("project_id"))
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.auth.service.account.email", credentialsMap.get("client_email"))
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.auth.service.account.private.key.id", credentialsMap.get("private_key_id"))
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.auth.service.account.private.key", credentialsMap.get("private_key"))
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_AUTH_SERVICE_ACCOUNT_ENABLE, "true")
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_PROJECT_ID, credentialsMap.get("project_id"))
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_EMAIL, credentialsMap.get("client_email"))
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_PRIVATE_KEY_ID, credentialsMap.get("private_key_id"))
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_PRIVATE_KEY, credentialsMap.get("private_key"))
     spark.sparkContext.hadoopConfiguration.set("parentProject", credentialsMap.get("project_id"))
-    spark.sparkContext.hadoopConfiguration.set("fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
+    spark.sparkContext.hadoopConfiguration.set(FS_GS_IMPL, "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem")
     spark.conf.set("viewsEnabled", "true")
     spark.conf.set("materializationProject", credentialsMap.get("project_id"))
     spark.conf.set("materializationDataset", "temp")
