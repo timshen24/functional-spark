@@ -9,9 +9,11 @@ trait Impl1ETLProd extends Impl1ETL {
 
   initParams()
 
-  override protected def getSometracking(omniPaths: String*): DataFrame = ???
-
   override def getSourceDf(configRepo: CustomRepoConfig): DataFrame =
     configRepo.prevStep(Seq("some certain paths"))
       .where(col("datepartition") >= configRepo.startDate)
+}
+
+object Impl1ETLProd extends Impl1ETL with IOProd {
+  override protected def getSometracking(omniPaths: String*): DataFrame = ???
 }

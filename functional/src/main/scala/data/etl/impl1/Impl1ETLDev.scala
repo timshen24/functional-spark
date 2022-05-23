@@ -19,3 +19,5 @@ trait Impl1ETLDev extends Impl1ETL {
       .show(200, truncate = false)
   }
 }
+
+object Impl1ETLDev extends Impl1ETLDev with IODev
