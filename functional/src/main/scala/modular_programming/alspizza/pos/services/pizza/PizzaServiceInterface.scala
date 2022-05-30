@@ -1,7 +1,7 @@
-package modular_programming.alspizza.pos.services
+package modular_programming.alspizza.pos.services.pizza
 
 import modular_programming.alspizza.Money
-import modular_programming.alspizza.pos.model._
+import modular_programming.alspizza.pos.model.{CrustSize, CrustType, Pizza, Topping}
 
 trait PizzaServiceInterface {
   def addTopping(p: Pizza, t: Topping): Pizza

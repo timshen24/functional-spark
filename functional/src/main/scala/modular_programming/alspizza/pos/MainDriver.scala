@@ -1,8 +1,8 @@
 package modular_programming.alspizza.pos
 
 import modular_programming.alspizza.pos.model._
-import modular_programming.alspizza.pos.services.MockDbOrderService.calculateOrderPrice
-import modular_programming.alspizza.pos.services.PizzaService
+import modular_programming.alspizza.pos.services.order.ServiceOfMockDbOrder.calculateOrderPrice
+import modular_programming.alspizza.pos.services.pizza.PizzaService
 
 object MainDriver extends App {
 

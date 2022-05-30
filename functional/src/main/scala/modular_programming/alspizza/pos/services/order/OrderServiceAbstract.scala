@@ -1,13 +1,14 @@
-package modular_programming.alspizza.pos.services
+package modular_programming.alspizza.pos.services.order
 
 import modular_programming.alspizza.Money
-import modular_programming.alspizza.pos.MainDriver
 import modular_programming.alspizza.pos.model._
+import modular_programming.alspizza.pos.services.pizza.PizzaService
 
-trait AbstractOrderService extends OrderServiceInterface {
+trait OrderServiceAbstract extends InterfaceOrderService {
   // create a concrete implementation of the trait so we
   // can use its `calculatePizzaPrice` function
   object PizzaService extends PizzaService
+  import PizzaService.calculatePizzaPrice
 
   // all implementations of this trait will use these functions,
   // so go ahead and define them here
@@ -28,7 +29,7 @@ trait AbstractOrderService extends OrderServiceInterface {
     val pizzaPrices: Seq[Money] = for {
       pizza <- o.pizzas
     } yield {
-      MainDriver.PizzaService.calculatePizzaPrice(
+      calculatePizzaPrice(
         pizza,
         toppingPrices,
         crustSizePrices,
