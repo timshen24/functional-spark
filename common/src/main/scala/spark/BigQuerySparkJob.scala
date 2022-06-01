@@ -1,6 +1,7 @@
 package spark
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.cloud.spark.bigquery.repackaged.com.google.cloud.bigquery.{BigQuery, TableId}
 import org.apache.commons.codec.binary.Base64
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.catalyst._
@@ -11,8 +12,11 @@ import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 
 import java.nio.charset.StandardCharsets
 import java.util
-
 import common.GeneralColumnConstants._
+
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 trait SparkJob {
   lazy val spark: SparkSession = getSparkSession
@@ -38,6 +42,17 @@ trait SparkJob {
     }
     spark.sparkContext.setLogLevel("WARN")
     spark
+  }
+
+  def estimateDfSize(df: DataFrame): BigInt = {
+    df.cache.count
+
+    val plan = df.queryExecution.logical
+    spark.sessionState
+      .executePlan(plan)
+      .optimizedPlan
+      .stats
+      .sizeInBytes
   }
 }
 
@@ -82,6 +97,26 @@ trait BigQuerySparkJob extends SparkJob {
         .option("createDisposition", "CREATE_IF_NEEDED")
         .mode(mode)
         .save(dest)
+    }
+  }
+}
+
+object BigQuerySparkJob {
+  def deletePartitions(start: LocalDate, end: LocalDate = LocalDate.now())(bigquery: BigQuery)(dataset: String)(table: String): Unit = {
+    val dates = for (i <- 0L to ChronoUnit.DAYS.between(start, end))
+      yield start.plusDays(i).format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+    println(dates)
+
+    import scala.concurrent.ExecutionContext.Implicits.global
+    import scala.concurrent._
+    import scala.util._
+    def deleteOnePartiton(date: String): Future[Boolean] = {
+      Future(bigquery.delete(TableId.of(dataset, s"$table$$$date")))
+    }
+
+    Future.traverse(dates.toList)(deleteOnePartiton).onComplete {
+      case Failure(t) => throw t
+      case Success(v) => println(s"The result of deleted BigQuery partitions are $v")
     }
   }
 }
