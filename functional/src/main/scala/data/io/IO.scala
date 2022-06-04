@@ -1,6 +1,5 @@
 package data.io
 
-import bq.BigQueryJob.deletePartitions
 import common.GeneralColumnConstants._
 import spark.BigQuerySparkJob
 import com.google.cloud.spark.bigquery.repackaged.com.google.api.services.bigquery.BigqueryScopes
@@ -54,6 +53,7 @@ trait IO extends BigQuerySparkJob {
   def mergeIntoBQ: Reader[InputForMergeBQ, Unit] = Reader {
     input => {
       val start = LocalDate.parse(input.startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+      import BigQuerySparkJob._
       deletePartitions(start)(input.bigquery)(input.bqDataset)(input.bqTable)
       spark.read.format(FORMAT).load(input.destPath)
         .where(col("datepartition") >= input.startDate)
