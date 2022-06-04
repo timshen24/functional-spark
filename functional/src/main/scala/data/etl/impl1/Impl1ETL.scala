@@ -2,9 +2,6 @@ package data.etl.impl1
 
 import data.etl.ETL
 import org.apache.spark.sql._
-import org.apache.spark.sql.expressions.Window
-import org.apache.spark.sql.functions._
-import org.apache.spark.storage.StorageLevel
 
 import scala.util.Try
 
