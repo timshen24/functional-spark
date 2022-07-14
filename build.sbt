@@ -2,7 +2,7 @@ import Dependencies._
 
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
-ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / scalaVersion := "2.12.16"
 
 lazy val baseSettings: Seq[Setting[_]] = Seq(
   scalacOptions ++= Seq(
