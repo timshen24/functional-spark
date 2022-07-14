@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 //  val kindProjector = "org.typelevel"     %% "kind-projector"  % "0.13.1" cross CrossVersion.full
   // Versions
-  lazy val sparkVersion = "3.2.1"
+  lazy val sparkVersion = "3.3.0"
 
   val deps: Seq[ModuleID] = Seq(
     "org.apache.spark"       %% "spark-sql"                        % sparkVersion             % "provided",
