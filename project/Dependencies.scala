@@ -9,7 +9,7 @@ object Dependencies {
     "org.apache.spark"       %% "spark-sql"                        % sparkVersion             % "provided",
     "org.apache.spark"       %% "spark-core"                       % sparkVersion             % "provided",
     "org.apache.spark"       %% "spark-core"                       % sparkVersion             % "provided",
-    "io.delta" %% "delta-core" % "1.2.1",
+    "io.delta" %% "delta-core" % "2.1.0",
     "com.typesafe" % "config" % "1.4.2" % "provided",
     "com.google.cloud.spark" %% "spark-bigquery-with-dependencies" % "0.24.2" % "provided" exclude("scala-library", "org.scala-lang"),
     "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test,
