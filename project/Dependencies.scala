@@ -12,7 +12,7 @@ object Dependencies {
     "io.delta" %% "delta-core" % "1.2.1",
     "com.typesafe" % "config" % "1.4.2" % "provided",
     "com.google.cloud.spark" %% "spark-bigquery-with-dependencies" % "0.24.2" % "provided" exclude("scala-library", "org.scala-lang"),
-    "org.scalatestplus" %% "scalacheck-1-14" % "3.2.2.0" % Test,
+    "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % Test,
     "org.scalatest" %% "scalatest" % "3.2.12" % Test
   )
 }
